@@ -108,8 +108,14 @@ namespace TiendaOnline.Controllers
         [HttpPost]
         public async Task<IActionResult> RemoveCoupon(CartDto cartDto)
         {
-            cartDto.CartHeader.CouponCode = "";
-            ResponseDto response = await _cartService.ApplyCouponAsync(cartDto);
+            //Console.WriteLine($"Coupon: {JsonConvert.SerializeObject(cartDto)}");
+            CartDto cart = await LoadCartBaseOnLoggedInUser();
+            cart.CartHeader.CouponCode = "";
+            cart.CartHeader.Name = User.Claims.Where(u => u.Type == JwtRegisteredClaimNames.Email)?.FirstOrDefault()?.Value;
+            cart.CartHeader.Email = User.Claims.Where(u => u.Type == JwtRegisteredClaimNames.Name)?.FirstOrDefault()?.Value;
+            cart.CartHeader.Phone = "55052";
+            //cartDto.CartDetailsDtos = ;
+            ResponseDto response = await _cartService.ApplyCouponAsync(cart);
             if (response != null & response.IsSuccess)
             {
                 TempData["success"] = "El carrito se actualizo correctamente";

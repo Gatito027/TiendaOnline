@@ -49,7 +49,7 @@
                                 <span class="fw-bold">@cartObj.Count</span>
                             </div>
                             <div class="col-2 col-lg-auto text-center">
-                                <a asp-action="Remove" asp-route-cartDetailsId="@cartObj.CartDetailsId" class="btn btn-sm btn-danger">
+                                <a asp-action="Remove" asp-controller="Cart" asp-route-cartDetailsId="@cartObj.CartDetailsId" class="btn btn-sm btn-danger">
                                     <i class="fas fa-trash-alt"></i>
                                 </a>
                             </div>

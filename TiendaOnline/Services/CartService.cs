@@ -14,6 +14,7 @@ namespace TiendaOnline.Services
         }
         public async Task<ResponseDto> ApplyCouponAsync(CartDto cartDto)
         {
+            Console.WriteLine($"Coupon: {JsonConvert.SerializeObject(cartDto)}");
             return await _baseService.SendAsync(new RequestDto()
             {
                 ApiType = Utility.Utilities.ApiType.POST,
@@ -43,17 +44,18 @@ namespace TiendaOnline.Services
 
         public async Task<ResponseDto> RemoveFromCartAsync(int cartDetailsId)
         {
+            //Console.WriteLine($"Upsert: {JsonConvert.SerializeObject(cartDetailsId)}");
             return await _baseService.SendAsync(new RequestDto()
             {
                 ApiType = Utility.Utilities.ApiType.POST,
                 Data = cartDetailsId,
-                Url = Utility.Utilities.ShoppingCartAPIBase + "/api/CartApi/RemoveFromCart/"
+                Url = Utility.Utilities.ShoppingCartAPIBase + "/api/CartApi/RemoveCart"
             });
         }
 
         public async Task<ResponseDto> UpsertCartAsync(CartDto cartDto)
         {
-            Console.WriteLine($"Upsert: {JsonConvert.SerializeObject(cartDto)}");
+            //Console.WriteLine($"Upsert: {JsonConvert.SerializeObject(cartDto)}");
             return await _baseService.SendAsync(new RequestDto()
             {
                 ApiType = Utility.Utilities.ApiType.POST,
