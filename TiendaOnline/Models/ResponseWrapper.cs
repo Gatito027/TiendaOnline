@@ -1,0 +1,11 @@
+﻿using System.Net;
+
+namespace TiendaOnline.Models
+{
+    public class ResponseWrapper<T>
+    {
+        public HttpStatusCode StatusCode { get; set; }
+        public string Message { get; set; }
+        public T Data { get; set; }
+    }
+}

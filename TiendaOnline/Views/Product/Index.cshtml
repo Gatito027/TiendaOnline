@@ -1,0 +1,31 @@
+﻿<div class="card shadow border-0 mt-4">
+    <div class="card-header bg-secondary bg-gradient m-lg-0 py-3 d-flex justify-content-between">
+        <div class="row">
+            <h1 class="text-white roboto-Regular-400">Productos</h1>
+        </div>
+        <ul class="list-group list-group-horizontal-sm pt-2">
+            <a style="text-decoration:none" asp-controller="Product" asp-action="ProductCreate" asp-route-status="approved">
+                <li class="list-group-item">Nuevo Producto</li>
+            </a>
+        </ul>
+    </div>
+    <div class="card-body p-4">
+        <table id="tblData" class="table table-bordered table-striped p-3" style="width:100%">
+            <thead>
+                <tr>
+                    <th class="roboto-Light-300">ID</th>
+                    <th class="roboto-Light-300">Nombre</th>
+                    <th class="roboto-Light-300">Precio</th>
+                    <th class="roboto-Light-300">Descripción</th>
+                    <th class="roboto-Light-300">Categoria</th>
+                    <th class="roboto-Light-300">Acciones</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/product.js"></script>
+}

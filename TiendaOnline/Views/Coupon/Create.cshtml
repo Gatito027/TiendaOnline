@@ -1,0 +1,170 @@
+﻿@model TiendaOnline.Models.Dto.CouponDto
+<div class="container-fluid py-4">
+    <div class="row justify-content-center">
+        <div class="col-xs-12 col-sm-12 col-md-10 col-lg-8">
+            <div class="card shadow-lg bg-body-tertiary rounded">
+                <div class="card-header bg-white border-bottom py-3">
+                    <h4 class="card-title title-morado roboto-bold-700 mb-0">
+                        <i class="fa-solid fa-ticket-alt me-2"></i>Crear Nuevo Cupon
+                    </h4>
+                </div>
+                <div class="card-body p-4">
+                    <p class="card-text text-muted mb-4">Completa el formulario para generar un nuevo cupon de descuento. Los cupones pueden ser utilizados por los usuarios en sus compras.</p>
+                    <form id="couponForm" asp-action="Create" asp-controller="Coupon">
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-6">
+                                <label class="form-label title-morado roboto-Medium-500">Código de Cupón</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light">
+                                        <i class="fa-solid fa-barcode"></i>
+                                    </span>
+                                    <input type="text" asp-for="CouponCode" class="form-control w-50" id="couponCode" placeholder="Ej: SAVE20" required />
+                                    <button type="button" class="btn btn-outline-secondary" id="generatedCode">
+                                        <i class="fa-solid fa-dice"></i>Generar
+                                    </button>
+                                </div>
+                                <div class="form-text">El código debe ser único y fácil de recordar</div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label title-morado roboto-Medium-500">Tipo de Descuento</label>
+                                <select class="form-select form-select-sm" id="discountType" asp-for="AmountType" required>
+                                    <option value="" selected disabled>Seleccione tipo de Descuento</option>
+                                    <option value="Porcentaje">Porcentaje (%)</option>
+                                    <option value="fixed">Monto Fijo ($)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-6">
+                                <label class="form-label title-morado roboto-Medium-500">Valor del Descuento</label>
+                                <div class="input-group">
+                                    <input type="number" asp-for="DiscountAmount" class="form-control form-control-sm w-75" id="discountValue" placeholder="Ingrese valor" min="0" required />
+                                    <span class="input-group-text bg-light" id="discountSymbol">%</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label title-morado">Limite de Uso</label>
+                                <input type="number" asp-for="LimitUse" class="form-control form-control-sm" id="usageLimit" placeholder="Cantidad maxima de usos" min="1" />
+                                <div class="form-text">Dejar en blanco para usos ilimitados</div>
+                            </div>
+                            @*a;adido*@
+                            <div class="row g-3 mb-3">
+                                <div class="col-md-6">
+                                    <label class="form-label title-morado roboto-Medium-500">Fecha de Inicio</label>
+                                    <input type="date" asp-for="DateInit" class="form-control form-control-sm" id="startDate" required />
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label title-morado roboto-Medium-500">Fecha de Expiración</label>
+                                    <input type="date" asp-for="DateEnd" class="form-control form-control-sm" id="expiryDate" required />
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label title-morado roboto-Medium-500">Descripción</label>
+                                <textarea class="form-control" id="description" rows="3" placeholder="Describa los detalles y condiciones del cupón"></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label title-morado roboto-Medium-500">Categorías Aplicables</label>
+                                <div class="row ms-0-cols-1 g-3 pt-3">
+                                    <div class="col">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="category1">
+                                            <label class="form-check-label" for="category1">Documentos Premium</label>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="category2">
+                                            <label class="form-check-label" for="category2">Cursos Online</label>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="category3">
+                                            <label class="form-check-label" for="category3">Membresías</label>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="category4">
+                                            <label class="form-check-label" for="category4">Almacenamiento</label>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="category5">
+                                            <label class="form-check-label" for="category5">Servicios Enterprise</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-check form-switch mb-4">
+                                <input class="form-check-input" asp-for="StateCoupon" type="checkbox" id="activeStatus" cheked />
+                                <label class="form-check title-morado roboto-Medium-500" for="activeStatus">Cupon Activo</label>
+                                <div class="form-text">Desactive esta opcion para guardar como borrador</div>
+                            </div>
+                            <div class="card bg-light mb-4">
+                                <div class="card-body">
+                                    <h6 class="card-title title-morado roboto-Medium-500">Vista Previa del Cupon</h6>
+                                    <div class="p-3 bg-white rounded border d-flex aling-items-center justify-content-between">
+                                        <div>
+                                            <span class="badge bg-primary mb-2">Descuento</span>
+                                            <h5 class="mb-1" id="previewCode">CUPON20</h5>
+                                            <small class="text-muted" id="previewDesc">20% de descuento en todas las categorias</small>
+                                        </div>
+                                        <div class="text-end">
+                                            <h4 class="text-primary mb-0" id="previewValue">20%</h4>
+                                            <small class="text-muted" id="previewDates">25/04/2025 - 25/05/2025</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer bg-white py-3 d-flex justify-content-end gap-2">
+                    <button type="button" class="btn btn-outline-secondary">
+                        <i class="fa-solid fa-xmark me-1"></i>Cancelar
+                    </button>
+                    <button type="submit" class="btn btn-primary" form="couponForm">
+                        <i class="fa-solid fa-save me-1"></i>Guardar Cupon
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function(){
+        function updatePreview(){
+            const code = $('#couponCode').val() || 'CUPON20';
+            const discountType = $('#discountType').val() || 'porcentaje';
+            const discountValue = $('#discountValue').val() || '20';
+            const startDate = $('#startDate').val() ? new Date($('#startDate').val()).toLocaleDateString(): '25/04/2025';
+            //ver mas
+            const endDate = $('#expiryDate').val() ? new Date($('#expiryDate').val()).toLocaleDateString(): '25/05/2025';
+            const description = $('#description').val() || '20% de descuento en todas las categorias';
+            $('#previewCode').text(code);
+            $('#previewValue').text(discountType === 'porcentage' ? discountValue + '%' : '$' + discountValue);
+            $('#previewDesc').text(description.substring(0,50)+(description.length > 50 ? '...':''));
+            $('#previewDates').text(startDate + '-' + endDate);
+        }
+        $('#couponForm input, #couponForm select, #couponForm textarea').on('input change', updatePreview);
+        $('#discountType').change(function() {
+            if ($(this).val() === 'Porcentaje') {
+                $('#discountSymbol').text('%');
+            } else {
+                $('#discountSymbol').text('$');
+            }
+        });
+        $('#generatedCode').click(function() {
+            const chars ='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let result= '';
+            for (let i = 0; i < 6; i++) {
+                result += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            $('#couponCode').val(result);
+            updatePreview();
+        });
+    });
+</script>

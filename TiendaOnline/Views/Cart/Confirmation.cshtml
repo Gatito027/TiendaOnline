@@ -1,0 +1,54 @@
+﻿@model int
+@section Styles{
+    <link href="~/css/confirm-order.css" rel="stylesheet" />
+}
+<div class="container">
+    <div class="header">
+        <h1 class="title">Gracias por tu pedido!</h1>
+    </div>
+    <div>
+        <div>
+            Pedido #@Model
+        </div>
+        <p>
+            Hemos recibido tu pedido correctamente y tu pago ha sido procesado con exito.
+        </p>
+        <div>
+            <span>🕒</span>
+            <span>Tu pedido estara listo en aproximadamente <strong>30 minutos</strong></span>
+        </div>
+    
+    <div>
+        <img src="/api/placeholder/400/320" alt="Ilustracion de pedido confirmado" class="ilustration" />
+        <div class="status-container">
+            <div class="status-step">
+                <div class="status-circle">✓</div>
+                 <div class="status-label">Pedido Recibido</div>
+            </div>
+            <div class="status-step">
+                <div class="status-line"></div>
+                <div class="status-circle">✓</div>
+                <div class="status-label">Pago Recibido</div>
+            </div>
+            <div class="status-step">
+                <div class="status-line"></div>
+                <div class="status-circle">⌛</div>
+                <div class="status-label">En Preparacion</div>
+            </div>
+            <div class="status-step">
+                <div class="status-line"></div>
+                <div class="status-circle">🔜</div>
+                <div class="status-label">Listo para Recoger</div>
+            </div>
+        </div>
+        <div>
+            <a href="#" class="btn">Ver Detalles del Pedido</a>
+            <a href="#" class="btn">Volver a la Tienda</a>
+        </div>
+    </div>
+    <div class="flooter">
+        <p>Si tienes alguna pregunta sobre tu pedido, por favor contactanos al (55) 123-4567</p>
+        <p>© 2025 Restaurante Delicioso. todos los derechos reservados.</p>
+    </div>
+    </div>
+</div>

@@ -1,0 +1,115 @@
+﻿@model TiendaOnline.Models.Dto.CartDto
+@if (Model.CartHeader != null && Model.CartDetailsDtos?.Count() > 0)
+{
+    <form method="post" asp-action="EmailCart">
+        <br />
+        <input asp-for="CartHeader.UserId" hidden />
+        <input asp-for="CartHeader.CartHeaderId" hidden />
+        <div>
+            <div class="card-header bg-dark text-light m-lg-0 row" style="background-color:#5a189a!important; color:white">
+                <div class="col-6">
+                    <h3 style="color:white;"><i class="bi bi-cart"></i> &nbsp; Shopping Cart</h3>
+                </div>
+                <div class="col-6 text-end">
+                    <a asp-action="Index" asp-controller="Home" class="btn btn-outline-warning mt-2 btn-sm">Continuar Comprando</a>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="d-none d-lg-block">
+                    <div class="row text-info">
+                        <div class="col-lg-2">
+                        </div>
+                        <div class="col-lg-5">
+                            <span class="roboto-Medium-500 title-orange">Detalle del Producto</span>
+                        </div>
+                        <div class="col-lg-2">
+                            <span class="roboto-Medium-500 title-orange">Precio</span>
+                        </div>
+                        <div class="col-lg-2">
+                            <span class="roboto-Medium-500 title-orange">Cantidad</span>
+                        </div>
+                        <div class="col-lg-1">
+                            <span class="roboto-Medium-500 title-orange">Acciones</span>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                @foreach (var cartObj in Model.CartDetailsDtos)
+                {
+                    <div class="row h-100">
+                        <div class="col-4 col-md-2 text-center py-2">
+                            <img src="@cartObj.ProductoDto.ImageUrl" class="rounded" width="100" />
+                        </div>
+                        <div class="col-8 col-md-5">
+                            <h5>@cartObj.ProductoDto.Name</h5>
+                            <div style="font:11px;">@Html.Raw(cartObj.ProductoDto.Description)</div>
+                        </div>
+                        <div class="col-3 col-md-2 pt-md-4" style="font:11px;">
+                            <span style="font-size:17px;">@string.Format("{0:c}", cartObj.ProductoDto.Price)</span>
+                        </div>
+                        <div class="col-3 col-md-2 pt-md-4" style="font:11px;">
+                            <span style="font-size:17px;">@cartObj.ProductoDto.Count</span>
+                        </div>
+                        <div class="col-2 col-lg-auto p-0 pt-lg-4 text-center">
+                            <a asp-action="Remove" asp-route-cartDetailsId="@cartObj.CartDetailsId" class="btn btn-sm btn-danger">
+                                <i class="fas fa-tash-alt"></i>
+                            </a>
+                        </div>
+                    </div>
+                }
+                <hr />
+                <div class="row">
+                    <div class="col-6">
+                        @if (string.IsNullOrEmpty(Model.CartHeader.CouponCode))
+                        {
+                            <span>Cupon:</span>
+                            <div class="d-flex align-items-center gap-2">
+                                <input asp-for="CartHeader.CouponCode" class="form-control form-control-sm" />
+                                <button type="submit" asp-action="ApplyCoupon" asp-controller="Cart" class="btn btn-sm btn-success">Aplicar</button>
+                            </div>
+                        }
+                        else
+                        {
+                            <span>Cupon:</span>
+                            <div class="d-flex align-items-center gap-2">
+                                <input asp-for="CartHeader.CouponCode" class="form-control form-control-sm" disabled/>
+                                <button type="submit" asp-action="RemoveCoupon" asp-controller="Cart" class="btn btn-sm btn-danger">Eliminar</button>
+                            </div>
+                        }
+                    </div>
+                    <div class="col-6 text-end">
+                        <span class="text-danger" style="font-size:21px;">Compra Total: @string.Format("{0:c}", Model.CartHeader.CartTotal) <br /></span>
+                        @if (Model.CartHeader.Discount > 0)
+                        {
+                            <span class="text-success" style="font-size:21px;">Descuento en la orden: @string.Format("{0:c}", Model.CartHeader.Discount)</span>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div>
+                    <button type="submit" class="btn btn-primary btn-lg w-100">
+                        <i class="fas fa-envelope"></i> Enviar Carrito por Email
+                    </button>
+                </div>
+                <div>
+                    <a asp-action="Checkout">Confirmar Pedido?</a>
+                </div>
+            </div>
+        </div>
+    </form>
+}
+else
+{
+    <div>
+        <div>
+            <div>
+                <i class="fas fa-shopping-cart"></i>Shopping Cart
+                <hr />
+                <div>
+                    <p>Agrega un producto a tu carrito de compras</p>
+                </div>
+            </div>
+        </div>
+    </div>
+}

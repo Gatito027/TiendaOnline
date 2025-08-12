@@ -1,0 +1,118 @@
+using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Newtonsoft.Json;
+using TiendaOnline.Contract;
+using TiendaOnline.Models;
+using TiendaOnline.Models.Dto;
+using TiendaOnline.Services.Contract;
+
+namespace TiendaOnline.Controllers
+{
+    public class HomeController : Controller
+    {
+        private readonly ILogger<HomeController> _logger;
+    private readonly IProductService _productService;
+    private readonly ICartService _cartService;
+         
+    public HomeController(ICartService cartService, IProductService productService,
+        ILogger<HomeController> logger)
+    {
+        _productService = productService;
+        _cartService = cartService;
+        _logger = logger;
+
+    }
+    public async Task<IActionResult> Index()
+    {
+        List<ProductDto> list = new List<ProductDto>();
+        ResponseDto response = await _productService.GatAllProductAsync();
+        if (response != null && response.IsSuccess)
+        {
+            list = JsonConvert.DeserializeObject<List<ProductDto>>(Convert.ToString(response.Result));
+        }
+        else
+        {
+            TempData["error"] = response?.Message;
+        }
+
+        return View(list);
+    }
+
+    [Authorize(Policy = "AdminPolicy")]
+    public IActionResult Privacy()
+    {
+        return View();
+    }
+
+    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+    public IActionResult Error()
+    {
+        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+    }
+
+
+    [Authorize]
+    [HttpGet]
+    public async Task<IActionResult> ProductDetails(int productId)
+    {
+        ProductDto model = new();
+
+        ResponseDto response = await _productService.GetProductByIdAsync(productId);
+
+        if (response != null && response.IsSuccess)
+        {
+            model = JsonConvert.DeserializeObject<ProductDto>(Convert.ToString(response.Result));
+        }
+        else
+        {
+            TempData["error"] = response?.Message;
+        }
+
+        return View(model);
+    }
+
+    [Authorize]
+    [HttpPost]
+    [ActionName("ProductDetails")]
+    public async Task<IActionResult> ProductDetails(ProductDto productDto) 
+    {
+        CartDto cartDto = new CartDto()
+        {
+            CartHeader = new CartHeaderDto
+            {
+                
+                UserId = User.Claims.FirstOrDefault(c => c.Type == "sub")?.Value
+
+            }
+        };
+
+        CartDetailsDto cartDetailsDto = new CartDetailsDto()
+        {
+            Count = productDto.Count,
+            ProductId = productDto.ProductId
+        };
+        List<CartDetailsDto> cartDetailsDtos = new List<CartDetailsDto>()
+        {
+            cartDetailsDto
+        };
+        cartDto.CartDetailsDtos = cartDetailsDtos;
+
+        //consumimos el microservicio consultando el microservicio por identificador  
+        //actualizamos  el carrito de servicio.
+        ResponseDto response = await _cartService.UpsertCartAsync(cartDto);
+
+        if (Response != null && response.IsSuccess)
+        {
+            TempData["success"] = "El Item fue agregado al carrito de compra";
+            return RedirectToAction(nameof(Index));
+        }
+        else {
+            TempData["error"] = response?.Message;
+        }
+        return View(productDto);
+    }
+
+    }
+}

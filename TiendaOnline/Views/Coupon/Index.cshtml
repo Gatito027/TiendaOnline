@@ -1,0 +1,53 @@
+﻿<div>
+    <div>
+        <div>
+            {
+                <div>
+                    <h4>No hay cupones disponibles</h4>
+                    <p>Crea nuevos cupones para promocionar tus productos</p>
+                </div>
+            }
+            else
+            {
+                <div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Codigo de Cupon</th>
+                                <th>Descuento</th>
+                                <th>Monto Minimo</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach(var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    <i class="bi bi-ticket-perforated me-2"></i>@item.CouponCode
+                                </td>
+                                <td>
+                                    @((item.DiscountAmount).ToString("c"))
+                                </td>
+                                <td>
+                                    @((item.MinimumAmount).ToString("c"))
+                                </td>
+                                <td>
+                                    <div role="group">
+                                        <a asp-action="CouponEdit" asp-route-couponId="@item.CouponId">
+                                            <i class="far fa-edit"></i>
+                                        </a>
+                                        <a asp-action="CouponDelete" asp-route-couponId="@item.CouponId">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                    </table>
+                </div>
+            }
+        </div>
+    </div>
+</div>

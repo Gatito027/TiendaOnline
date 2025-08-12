@@ -1,0 +1,83 @@
+﻿@model TiendaOnline.Models.Dto.CartDto
+<form method="post" asp-action="Checkout" asp-asp-controller="Cart">
+    <input asp-action="CartHeader.UserId" hidden />
+    <input asp-action="CartHeader.CartHeaderId" hidden />
+    <input asp-action="CartHeader.CouponCode" hidden />
+    <input asp-action="CartHeader.Discount" hidden />
+    <input asp-action="CartHeader.CartTotal" hidden />
+    <div>
+        <div>
+            <div>
+                <span>Resumen de Orden de Compra</span>
+            </div>
+            <div>
+                <a asp-action="CartIndex" asp-controller="Cart">Regresar al Carrito</a>
+            </div>
+            <br /><br /><br />
+            <hr />
+            <div>
+                <div>
+                    <div>
+                        <input asp-for="CartHeader.Name" placeholder="Nombre..."/>
+                        <span asp-validation-for="CartHeader.Name" class="text-danger"></span>
+                    </div>
+                    <div>
+                        <input asp-for="CartHeader.Email" placeholder="Email..."/>
+                        <span asp-validation-for="CartHeader.Email" class="text-danger"></span>
+                    </div>
+                    <div>
+                        <input asp-for="CartHeader.Phone" placeholder="Telefono..."/>
+                        <span asp-validation-for="CartHeader.Phone" class="text-danger"></span>
+                    </div>
+                    <div class="col-12 pt-2">
+                        <label asp-for="CartHeader" class="form-label title-morado roboto-Light-300">
+                            El pedido estará listo 30 minutos después de realizarlo. Si realizas el pedido cuando el proveedor no tiene el producto en stock, estará listo al día siguiente.
+                        </label>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card mt-3">
+                                <div class="card-body">
+                                    <div class="row d-flex align-items-center">
+                                        <div class="col-3 text-danger">
+                                            Detalles Del Producto
+                                        </div>
+                                        <div class="col-3">
+                                            Precio
+                                        </div>
+                                        <div class="col-3">
+                                            Cantidad
+                                        </div>
+                                    </div>
+                                    @foreach (var cartObj in Model.CartDetailsDtos)
+                                    {
+                                        <div class="row">
+                                            <div class="col-3">
+                                                <span style="font-size:20px" class="roboto-Light-300">@cartObj.ProductoDto.Name</span>
+                                            </div>
+                                            <div class="col-3" style="font-size:11px">
+                                                <span style="font-size:17px" class="roboto-Light-300">@cartObj.ProductoDto.Price.ToString("c")</span>
+                                            </div>
+                                            <div class="col-3" style="font-size:11px">
+                                                <span style="font-size:17px" class="roboto-Light-300">@cartObj.Count</span>
+                                            </div>
+                                        </div>
+                                    }
+                                    <div class="row">
+                                        <div class="col-12 text-center pt-4 text-danger">
+                                            Total: @Model.CartHeader.CartTotal.ToString("c") <br />
+                                            @if (Model.CartHeader.Discount > 0)
+                                            {
+                                                <span class="text-success roboto-Medium-500">Descuento de Orden @Model.CartHeader.Discount.ToString("c")</span>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
