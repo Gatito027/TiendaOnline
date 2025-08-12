@@ -40,7 +40,6 @@ namespace TiendaOnline.Controllers
         return View(list);
     }
 
-    [Authorize(Policy = "AdminPolicy")]
     public IActionResult Privacy()
     {
         return View();

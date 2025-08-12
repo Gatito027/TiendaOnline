@@ -1,8 +1,366 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model IEnumerable<TiendaOnline.Models.Dto.ProductDto>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "KnowCloud - Tienda Online";
+}
+@section Styles {
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" rel="stylesheet" />
+    <style>
+        :root {
+            --orange-primary: #FF6B35;
+            --orange-light: #FFA07A;
+            --orange-dark: #E05A2B;
+            --gray-light: #F8F9FA;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+        }
+        
+        .store-header {
+            background-color: white;
+            padding: 1.5rem 0;
+            border-bottom: 3px solid var(--orange-primary);
+            margin-bottom: 2rem;
+        }
+        
+        .store-header h1 {
+            color: var(--orange-primary);
+            font-weight: 800;
+        }
+        
+        .search-bar {
+            position: relative;
+            width: 100%;
+        }
+        
+        .search-bar input {
+            padding-right: 40px;
+            border-radius: 25px;
+            border: 2px solid #ddd;
+        }
+        
+        .search-bar button {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--orange-primary);
+        }
+        
+        .product-card {
+            border: none;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            background: white;
+            height: 100%;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(255, 107, 53, 0.2);
+        }
+        
+        .product-image {
+            height: 200px;
+            object-fit: contain;
+            padding: 15px;
+            background: var(--gray-light);
+        }
+        
+        .price {
+            font-weight: bold;
+            color: var(--orange-primary);
+            font-size: 1.2rem;
+        }
+        
+        .rating i {
+            color: gold;
+        }
+        
+        .btn-orange {
+            background-color: var(--orange-primary);
+            color: white;
+            border: none;
+        }
+        
+        .btn-orange:hover {
+            background-color: var(--orange-dark);
+            color: white;
+        }
+        
+        .btn-outline-orange {
+            border: 2px solid var(--orange-primary);
+            color: var(--orange-primary);
+            background: transparent;
+        }
+        
+        .btn-outline-orange:hover {
+            background-color: var(--orange-primary);
+            color: white;
+        }
+        
+        .section-title {
+            position: relative;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            color: var(--orange-primary);
+        }
+        
+        .section-title:after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--orange-primary);
+        }
+        
+        .filter-box {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+        }
+        
+        .owl-carousel .item {
+            padding: 10px;
+        }
+        
+        .owl-carousel .card {
+            border: none;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+        }
+        
+        .owl-theme .owl-nav [class*='owl-'] {
+            background: var(--orange-primary);
+            color: white;
+        }
+        
+        .owl-theme .owl-dots .owl-dot.active span, 
+        .owl-theme .owl-dots .owl-dot:hover span {
+            background: var(--orange-primary);
+        }
+    </style>
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container-fluid px-lg-5">
+    <!-- Header principal -->
+    <header class="store-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-3 mb-3 mb-lg-0">
+                    <h1><i class="fas fa-cloud me-2"></i>KnowCloud</h1>
+                    <p class="mb-0 text-muted">Tecnología a tu alcance</p>
+                </div>
+                <div class="col-lg-6 mb-3 mb-lg-0">
+                    <div class="search-bar">
+                        <input type="text" class="form-control form-control-lg" id="mainSearch" placeholder="¿Qué estás buscando hoy?">
+                        <button type="button"><i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+                <div class="col-lg-3 text-lg-end">
+                    <a href="#" class="btn btn-outline-orange me-2"><i class="fas fa-user"></i></a>
+                    <a href="#" class="btn btn-outline-orange position-relative">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">0</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Filtros -->
+    <div class="filter-box">
+        <h4 class="section-title"><i class="fas fa-filter me-2"></i>Filtrar Productos</h4>
+        <div class="row">
+            <div class="col-md-3 mb-3">
+                <label class="form-label">Buscar producto</label>
+                <input type="text" class="form-control" id="searchInput" placeholder="Nombre del producto...">
+            </div>
+            <div class="col-md-3 mb-3">
+                <label class="form-label">Precio máximo</label>
+                <input type="number" class="form-control" id="priceFilter" placeholder="Precio máximo">
+            </div>
+            <div class="col-md-3 mb-3">
+                <label class="form-label">Valoración mínima</label>
+                <select class="form-select" id="ratingFilter">
+                    <option value="">Todas</option>
+                    <option value="1">1+ estrella</option>
+                    <option value="2">2+ estrellas</option>
+                    <option value="3">3+ estrellas</option>
+                    <option value="4">4+ estrellas</option>
+                </select>
+            </div>
+            <div class="col-md-3 mb-3">
+                <label class="form-label">Ordenar por</label>
+                <select class="form-select" id="sortFilter">
+                    <option value="none">Seleccionar</option>
+                    <option value="priceAsc">Precio: menor a mayor</option>
+                    <option value="priceDesc">Precio: mayor a menor</option>
+                    <option value="ratingDesc">Mejor valorados</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <!-- Carrusel de productos destacados -->
+    <h4 class="section-title"><i class="fas fa-star me-2"></i>Productos Destacados</h4>
+    <div class="owl-carousel owl-theme mb-5">
+        @foreach (var product in Model.Take(5))
+        {
+            <div class="item">
+                <div class="card product-card">
+                    <img src="@product.ImageUrl" class="card-img-top product-image" alt="@product.Name" />
+                    <div class="card-body">
+                        <h5 class="card-title">@product.Name</h5>
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="price">@string.Format("{0:c}", product.Price)</span>
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                        </div>
+                        <a asp-action="ProductDetails" asp-route-productId="@product.ProductId" 
+                           class="btn btn-orange btn-sm w-100">Ver Detalles</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <!-- Todos los productos -->
+    <h4 class="section-title"><i class="fas fa-boxes me-2"></i>Todos los Productos</h4>
+    <div class="row" id="productList">
+        @foreach (var product in Model)
+        {
+            <div class="col-lg-3 col-md-4 col-sm-6 mb-4 product-item" data-name="@product.Name" data-price="@product.Price">
+                <div class="product-card h-100">
+                    <img src="@product.ImageUrl" class="w-100 product-image" alt="@product.Name" />
+                    <div class="card-body">
+                        <h5 class="card-title">@product.Name</h5>
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="price">@string.Format("{0:c}", product.Price)</span>
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                        </div>
+                        <div class="d-grid gap-2">
+                            <a asp-action="ProductDetails" asp-route-productId="@product.ProductId"
+                               class="btn btn-orange btn-sm">Detalles</a>
+                            <button class="btn btn-outline-orange btn-sm add-to-cart" data-id="@product.ProductId">
+                                <i class="fas fa-cart-plus me-1"></i>Agregar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="text-center mt-4 mb-5">
+        <button id="loadMoreBtn" class="btn btn-orange px-4">
+            <i class="fas fa-plus-circle me-2"></i>Cargar más productos
+        </button>
+    </div>
 </div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            // Inicializar carrusel
+            $('.owl-carousel').owlCarousel({
+                loop: true,
+                margin: 20,
+                nav: true,
+                responsive: {
+                    0: { items: 1 },
+                    576: { items: 2 },
+                    768: { items: 3 },
+                    992: { items: 4 }
+                }
+            });
+
+            // Filtrar productos
+            $('#searchInput, #priceFilter, #ratingFilter, #sortFilter').on('change keyup', function() {
+                filterProducts();
+            });
+
+            // Función para filtrar productos
+            function filterProducts() {
+                const searchTerm = $('#searchInput').val().toLowerCase();
+                const maxPrice = parseFloat($('#priceFilter').val()) || Infinity;
+                const minRating = parseInt($('#ratingFilter').val()) || 0;
+                const sortBy = $('#sortFilter').val();
+                
+                $('.product-item').each(function() {
+                    const productName = $(this).data('name').toLowerCase();
+                    const productPrice = parseFloat($(this).data('price'));
+                    const productRating = 3; // Esto debería venir de los datos reales
+                    
+                    const nameMatch = productName.includes(searchTerm);
+                    const priceMatch = productPrice <= maxPrice;
+                    const ratingMatch = productRating >= minRating;
+                    
+                    if (nameMatch && priceMatch && ratingMatch) {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
+
+                // Ordenar productos
+                if (sortBy !== 'none') {
+                    const $container = $('#productList');
+                    const $items = $container.find('.product-item').sort(function(a, b) {
+                        const priceA = parseFloat($(a).data('price'));
+                        const priceB = parseFloat($(b).data('price'));
+                        
+                        if (sortBy === 'priceAsc') return priceA - priceB;
+                        if (sortBy === 'priceDesc') return priceB - priceA;
+                        return 0;
+                    });
+                    
+                    $container.empty().append($items);
+                }
+            }
+
+            // Agregar al carrito
+            $('.add-to-cart').click(function() {
+                const productId = $(this).data('id');
+                addToCart(productId);
+            });
+
+            function addToCart(productId) {
+                // Simular agregar al carrito
+                $(this).html('<i class="fas fa-check me-1"></i>Agregado');
+                $(this).removeClass('btn-outline-orange').addClass('btn-success');
+                
+                setTimeout(() => {
+                    $(this).html('<i class="fas fa-cart-plus me-1"></i>Agregar');
+                    $(this).removeClass('btn-success').addClass('btn-outline-orange');
+                }, 2000);
+                
+                // Aquí iría la lógica real para agregar al carrito
+                console.log('Producto agregado al carrito:', productId);
+            }
+        });
+    </script>
+}

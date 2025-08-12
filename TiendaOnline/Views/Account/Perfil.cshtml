@@ -2,79 +2,90 @@
     ViewData["Title"] = "Perfil";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <div class="card shadow-lg p-3 mb-5 bg-body rounded">
+    <div class="row justify-content-center">
+        <div class="col-xs-12 col-sm-12 col-md-10 col-lg-8">
+            <div class="card shadow-lg p-4 mb-5 bg-white rounded border-top border-4 border-orange">
                 <div class="card-title">
-                    <span class="roboto-Bold-700 title-morado">
-                        <i class="fas fa-user-tie m-1"></i>
+                    <h3 class="roboto-bold title-orange">
+                        <i class="fas fa-user-tie me-2"></i>
                         Perfil de Usuario
-                    </span>
+                    </h3>
                 </div>
-                <hr/>
-                <div class="card-subtitle">
-                    <span class="roboto-thin-ExtraLight-200">Completa los datos de tu cuenta</span>
+                <hr class="border-orange" />
+                <div class="card-subtitle mb-4">
+                    <span class="roboto-light text-muted">Completa los datos de tu cuenta</span>
                 </div>
                 <div class="card-body">
-                    <div class="container-fluid">
-                        <div class="d-flex flex-row">
-                            <div class="align-content-md-start m-2 col-xs-12 col-sm-12 col-md-2 col-lg-2">
-                                <span class="roboto-thin-ExtraLight-200 title-morado">Nombre de perfil:</span>
+                    <form>
+                        <!-- Sección de información básica -->
+                        <div class="mb-4">
+                            <h5 class="roboto-medium text-orange mb-3"><i class="fas fa-id-card me-2"></i>Información Básica</h5>
+
+                            <div class="row mb-3">
+                                <label class="col-md-3 col-form-label roboto-light">Nombre de perfil:</label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control form-control-lg border-orange" placeholder="Nombre del Perfil" required />
+                                </div>
                             </div>
-                            <div class="align-content-center col-xs-12 col-sm-12 col-md-10 col-lg-10">
-                                <input type="text" class="form-control form-control-sm" placeholder="Nombre del Perfil" requred />
-                            </div>
-                        </div>
-                        <div class="d-flex flex-row">
-                            <div class="align-content-md-start m-2 col-xs-12 col-sm-12 col-md-2 col-lg-2">
-                                <span class="roboto-thin-ExtraLight-200 title-morado">Descripcion:</span>
-                            </div>
-                            <div class="align-content-center col-xs-12 col-sm-12 col-md-10 col-lg-10">
-                                <textarea cols="5" class="form-control form-control-sm" placeholder="Descripcion del Perfil"></textarea>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="d-flex flex-row mt-1">
-                                <div class="align-content-md-start m-2 col-xs-12 col-sm-12 col-md-2 col-lg-2">
-                                    <span class="roboto-thin-ExtraLight-200 title-morado">Nombre:</span>
-                                </div>
-                                <div class="align-content-center col-xs-12 col-sm-12 col-md-10 col-lg-10">
-                                    <input type="text" class="form-control form-control-sm" placeholder="Nombre completo" requred />
-                                </div>
-                                <div class="align-content-md-start m-2 col-xs-12 col-sm-12 col-md-2 col-lg-2">
-                                    <span class="roboto-thin-ExtraLight-200 title-morado">Apellido Paterno:</span>
-                                </div>
-                                <div class="align-content-center col-xs-12 col-sm-12 col-md-10 col-lg-10">
-                                    <input type="text" class="form-control form-control-sm" placeholder="Apellido Paterno" requred />
-                                </div>
-                                <div class="align-content-md-start m-2 col-xs-12 col-sm-12 col-md-2 col-lg-2">
-                                    <span class="roboto-thin-ExtraLight-200 title-morado">Apellido Materno:</span>
-                                </div>
-                                <div class="align-content-center col-xs-12 col-sm-12 col-md-10 col-lg-10">
-                                    <input type="text" class="form-control form-control-sm" placeholder="Apellido Materno" requred />
+
+                            <div class="row mb-3">
+                                <label class="col-md-3 col-form-label roboto-light">Descripción:</label>
+                                <div class="col-md-9">
+                                    <textarea rows="3" class="form-control form-control-lg border-orange" placeholder="Descripción del Perfil"></textarea>
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="d-flex flex-row mt-1">
-                                <div class="align-content-md-start m-2 col-xs-12 col-sm-12 col-md-2 col-lg-2">
-                                    <span class="roboto-thin-ExtraLight-200 title-morado">Email:</span>
+
+                        <!-- Sección de datos personales -->
+                        <div class="mb-4">
+                            <h5 class="roboto-medium text-orange mb-3"><i class="fas fa-user-circle me-2"></i>Datos Personales</h5>
+
+                            <div class="row mb-3">
+                                <label class="col-md-3 col-form-label roboto-light">Nombre:</label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control form-control-lg border-orange" placeholder="Nombre completo" required />
                                 </div>
-                                <div class="align-content-center col-xs-12 col-sm-12 col-md-10 col-lg-10">
-                                    <input type="text" class="form-control form-control-sm" placeholder="Correo Electronico" requred />
+                            </div>
+
+                            <div class="row mb-3">
+                                <label class="col-md-3 col-form-label roboto-light">Apellido Paterno:</label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control form-control-lg border-orange" placeholder="Apellido Paterno" required />
                                 </div>
-                                <div class="align-content-md-start m-2 col-xs-12 col-sm-12 col-md-2 col-lg-2">
-                                    <span class="roboto-thin-ExtraLight-200 title-morado">Num.Celular:</span>
+                            </div>
+
+                            <div class="row mb-3">
+                                <label class="col-md-3 col-form-label roboto-light">Apellido Materno:</label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control form-control-lg border-orange" placeholder="Apellido Materno" required />
                                 </div>
-                                <div class="align-content-center col-xs-12 col-sm-12 col-md-10 col-lg-10">
-                                    <input type="text" class="form-control form-control-sm" placeholder="Num.Celular" requred />
+                            </div>
+                        </div>
+
+                        <!-- Sección de contacto -->
+                        <div class="mb-4">
+                            <h5 class="roboto-medium text-orange mb-3"><i class="fas fa-address-book me-2"></i>Información de Contacto</h5>
+
+                            <div class="row mb-3">
+                                <label class="col-md-3 col-form-label roboto-light">Email:</label>
+                                <div class="col-md-9">
+                                    <input type="email" class="form-control form-control-lg border-orange" placeholder="Correo Electrónico" required />
                                 </div>
-                                <div class="align-content-md-start m-2 col-xs-12 col-sm-12 col-md-2 col-lg-2">
-                                    <span class="roboto-thin-ExtraLight-200 title-morado">Genero:</span>
+                            </div>
+
+                            <div class="row mb-3">
+                                <label class="col-md-3 col-form-label roboto-light">Núm. Celular:</label>
+                                <div class="col-md-9">
+                                    <input type="tel" class="form-control form-control-lg border-orange" placeholder="Número de Celular" required />
                                 </div>
-                                <div class="align-content-center col-xs-12 col-sm-12 col-md-10 col-lg-10">
-                                    <select class="form-select form-select-sm" aria-label=".form-select-sm example">
+                            </div>
+
+                            <div class="row mb-3">
+                                <label class="col-md-3 col-form-label roboto-light">Género:</label>
+                                <div class="col-md-9">
+                                    <select class="form-select form-select-lg border-orange">
                                         <option selected>Seleccionar</option>
                                         <option value="1">Masculino</option>
                                         <option value="2">Femenino</option>
@@ -83,32 +94,92 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row mt-3">
-                            <div class="d-flex flex-row justify-content-sm-start">
-                                <button class="btn btn-link title-orange roboto-Black-900" id="btnDireccion">
-                                    <i class="fas fa-user-plus"></i>
-                                    Add Direccion
-                                </button>
-                            </div>
-                            <div class="d-flex flex-row justify-content-sm-end">
-                                <span class="roboto-thin-ExtraLight-200 title-morado">
-                                    <i class="fade fa-user-tag"></i>
-                                    Subir Foto
-                                </span>
-                            </div>
-                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 d-flex flex-row">
-                                <input type="file" accept="image/*" id="txtFile" class="drop-container title-morado w-100" />
-                            </div>
-                        </div>
-                        <div class="row mt-2">
-                            <div class="d-flex flex-row">
-                                <input type="submit" class="btn btn-lg btn-bd-morado w-100" value="Guardar" id="btnGuardar" />
+
+                        <!-- Sección de foto y acciones -->
+                        <div class="mb-4">
+                            <h5 class="roboto-medium text-orange mb-3"><i class="fas fa-camera me-2"></i>Foto de Perfil</h5>
+
+                            <div class="row mb-3">
+                                <div class="col-md-12">
+                                    <div class="dropzone border-orange p-4 text-center rounded">
+                                        <i class="fas fa-cloud-upload-alt fa-3x text-orange mb-3"></i>
+                                        <p class="roboto-light">Arrastra tu foto aquí o haz clic para seleccionar</p>
+                                        <input type="file" accept="image/*" id="txtFile" class="d-none" />
+                                        <button type="button" class="btn btn-outline-orange" onclick="document.getElementById('txtFile').click()">
+                                            Seleccionar Archivo
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
+
+                        <!-- Botones de acción -->
+                        <div class="d-flex justify-content-between mt-4">
+                            <button type="button" class="btn btn-outline-orange roboto-bold" id="btnDireccion">
+                                <i class="fas fa-map-marker-alt me-2"></i>
+                                Agregar Dirección
+                            </button>
+
+                            <button type="submit" class="btn btn-orange roboto-bold px-4">
+                                <i class="fas fa-save me-2"></i>
+                                Guardar Perfil
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 <script src="~/js/create-file.js"></script>
+
+<style>
+    .title-orange, .text-orange {
+        color: #FF6B35;
+    }
+
+    .border-orange {
+        border-color: #FF6B35 !important;
+    }
+
+    .btn-orange {
+        background-color: #FF6B35;
+        color: white;
+    }
+
+    .btn-outline-orange {
+        border-color: #FF6B35;
+        color: #FF6B35;
+    }
+
+        .btn-outline-orange:hover {
+            background-color: #FF6B35;
+            color: white;
+        }
+
+    .dropzone {
+        border: 2px dashed #FF6B35;
+        transition: all 0.3s;
+    }
+
+        .dropzone:hover {
+            background-color: rgba(255, 107, 53, 0.1);
+            cursor: pointer;
+        }
+
+    .roboto-bold {
+        font-family: 'Roboto', sans-serif;
+        font-weight: 700;
+    }
+
+    .roboto-medium {
+        font-family: 'Roboto', sans-serif;
+        font-weight: 500;
+    }
+
+    .roboto-light {
+        font-family: 'Roboto', sans-serif;
+        font-weight: 300;
+    }
+</style>

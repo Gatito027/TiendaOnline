@@ -2,4 +2,110 @@
     ViewData["Title"] = "Denied";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h1 class="roboto-Black-900 title-orange">Acceso Denegado</h1>
+
+<div class="container-fluid">
+    <div class="row justify-content-center align-items-center min-vh-80">
+        <div class="col-md-8 col-lg-6 text-center">
+            <div class="card shadow-lg border-0 rounded-3 border-top border-4 border-orange bg-white">
+                <div class="card-body p-5">
+                    <!-- Icono de prohibido -->
+                    <div class="denied-icon mb-4">
+                        <i class="fas fa-ban fa-5x text-orange"></i>
+                    </div>
+
+                    <!-- Título principal -->
+                    <h1 class="roboto-black title-orange mb-3">Acceso Denegado</h1>
+
+                    <!-- Mensaje descriptivo -->
+                    <p class="roboto-light lead text-muted mb-4">
+                        No tienes los permisos necesarios para acceder a esta página.
+                        Por favor, contacta al administrador si crees que esto es un error.
+                    </p>
+
+                    <!-- Botón de acción -->
+                    <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                        <a href="/" class="btn btn-orange btn-lg px-4 gap-3 roboto-bold">
+                            <i class="fas fa-home me-2"></i>Volver al Inicio
+                        </a>
+                        <a href="/contact" class="btn btn-outline-orange btn-lg px-4 roboto-bold">
+                            <i class="fas fa-envelope me-2"></i>Contactar Soporte
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .min-vh-80 {
+        min-height: 80vh;
+    }
+
+    .denied-icon {
+        animation: pulse 1.5s infinite;
+    }
+    {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+
+    }
+
+    .title-orange {
+        color: #FF6B35;
+    }
+
+    .text-orange {
+        color: #FF6B35;
+    }
+
+    .border-orange {
+        border-color: #FF6B35 !important;
+    }
+
+    .btn-orange {
+        background-color: #FF6B35;
+        color: white;
+        border: none;
+    }
+
+        .btn-orange:hover {
+            background-color: #E05A2B;
+            color: white;
+        }
+
+    .btn-outline-orange {
+        border: 2px solid #FF6B35;
+        color: #FF6B35;
+        background: transparent;
+    }
+
+        .btn-outline-orange:hover {
+            background-color: #FF6B35;
+            color: white;
+        }
+
+    .roboto-black {
+        font-family: 'Roboto', sans-serif;
+        font-weight: 900;
+        font-size: 2.5rem;
+    }
+
+    .roboto-bold {
+        font-family: 'Roboto', sans-serif;
+        font-weight: 700;
+    }
+
+    .roboto-light {
+        font-family: 'Roboto', sans-serif;
+        font-weight: 300;
+    }
+</style>
