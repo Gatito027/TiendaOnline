@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
@@ -98,9 +99,14 @@ namespace TiendaOnline.Controllers
         };
         cartDto.CartDetailsDtos = cartDetailsDtos;
 
+            
         //consumimos el microservicio consultando el microservicio por identificador  
         //actualizamos  el carrito de servicio.
-        ResponseDto response = await _cartService.UpsertCartAsync(cartDto);
+        cartDto.CartHeader.Name = User.Claims.Where(u => u.Type == JwtRegisteredClaimNames.Email)?.FirstOrDefault()?.Value;
+        cartDto.CartHeader.Email = User.Claims.Where(u => u.Type == JwtRegisteredClaimNames.Name)?.FirstOrDefault()?.Value;
+        cartDto.CartHeader.Phone = "55052";
+        cartDto.CartHeader.CouponCode = "";
+            ResponseDto response = await _cartService.UpsertCartAsync(cartDto);
 
         if (Response != null && response.IsSuccess)
         {

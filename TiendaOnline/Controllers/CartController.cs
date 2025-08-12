@@ -139,12 +139,15 @@ namespace TiendaOnline.Controllers
         {
             var userId = User.Claims.Where(u => u.Type == JwtRegisteredClaimNames.Sub)?.FirstOrDefault()?.Value;
             ResponseDto response = await _cartService.GetCartByUserIdAsync(userId);
+            //Console.WriteLine($"Repuesta: {JsonConvert.SerializeObject(response)}");
             if (response != null & response.IsSuccess && response.Result != null)
             {
                 string jsonResult = JsonConvert.SerializeObject(response.Result);
                 CartDto cartDto = JsonConvert.DeserializeObject<CartDto>(jsonResult);
+                //Console.WriteLine($"Carrito: {JsonConvert.SerializeObject(cartDto)}");
                 return cartDto;
             }
+            
             return new CartDto();
 
         }
@@ -153,7 +156,12 @@ namespace TiendaOnline.Controllers
         [HttpPost]
         public async Task<IActionResult> EmailCart(CartDto cartDto)
         {
-            ResponseDto? response = await _cartService.EmailCart(cartDto);
+            CartDto cart = await LoadCartBaseOnLoggedInUser();
+            cart.CartHeader.Name = User.Claims.Where(u => u.Type == JwtRegisteredClaimNames.Email)?.FirstOrDefault()?.Value;
+            cart.CartHeader.Email = User.Claims.Where(u => u.Type == JwtRegisteredClaimNames.Name)?.FirstOrDefault()?.Value;
+            cart.CartHeader.Phone = "55052";
+            //cart.CartDetailsDtos
+            ResponseDto? response = await _cartService.EmailCart(cart);
             if (response != null & response.IsSuccess)
             {
                 TempData["success"] = "El carrito fue actualizado correctamente";

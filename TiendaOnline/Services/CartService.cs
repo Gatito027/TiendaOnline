@@ -1,4 +1,5 @@
-﻿using TiendaOnline.Contract;
+﻿using Newtonsoft.Json;
+using TiendaOnline.Contract;
 using TiendaOnline.Models.Dto;
 using TiendaOnline.Services.Contract;
 
@@ -22,6 +23,7 @@ namespace TiendaOnline.Services
         }
         public async Task<ResponseDto> EmailCart(CartDto cartDto)
         {
+            
             return await _baseService.SendAsync(new RequestDto()
             {
                 ApiType = Utility.Utilities.ApiType.POST,
@@ -51,11 +53,12 @@ namespace TiendaOnline.Services
 
         public async Task<ResponseDto> UpsertCartAsync(CartDto cartDto)
         {
+            Console.WriteLine($"Upsert: {JsonConvert.SerializeObject(cartDto)}");
             return await _baseService.SendAsync(new RequestDto()
             {
                 ApiType = Utility.Utilities.ApiType.POST,
                 Data = cartDto,
-                Url = Utility.Utilities.ShoppingCartAPIBase + "/api/CartApi/UpsertCart",
+                Url = Utility.Utilities.ShoppingCartAPIBase + "/api/CartApi/CartUpsert",
             });
         }
     }
